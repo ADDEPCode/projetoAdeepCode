@@ -1,0 +1,462 @@
+/* =========================================
+   VARIÁVEIS & RESET
+   ========================================= */
+:root {
+    --bg-dark: #0A0A0A;
+    --bg-card: #1F1F1F;
+    --primary: #0074FF;
+    --accent: #00D1FF;
+    --text-light: #E6E6E6;
+    --text-white: #FFFFFF;
+    
+    --font-heading: 'Montserrat', sans-serif;
+    --font-body: 'Inter', sans-serif;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--bg-dark);
+    color: var(--text-light);
+    font-family: var(--font-body);
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+h1, h2, h3, h4 {
+    font-family: var(--font-heading);
+    color: var(--text-white);
+    font-weight: 700;
+}
+
+a { text-decoration: none; color: inherit; transition: 0.3s; }
+ul { list-style: none; }
+
+/* =========================================
+   HEADER & NAVEGAÇÃO
+   ========================================= */
+.header {
+    background-color: rgba(10, 10, 10, 0.95);
+    padding: 15px 0;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+    border-bottom: 1px solid #333;
+}
+
+.nav-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Logo */
+.logo-link {
+    display: flex;
+    align-items: center;
+    z-index: 2001; /* Garante que a logo fique sobre o menu mobile se necessário */
+}
+
+.header-logo-img {
+    height: 60px; /* Altura ajustada para não quebrar o header */
+    width: auto;
+    display: block;
+}
+
+/* Navegação Desktop Padrão */
+.nav-menu {
+    display: block;
+}
+
+.nav-list {
+    display: flex;
+    gap: 30px;
+    align-items: center;
+}
+
+.nav-list a:hover { color: var(--accent); }
+
+.btn-nav {
+    border: 1px solid var(--primary);
+    padding: 8px 20px;
+    border-radius: 4px;
+    color: var(--primary);
+}
+.btn-nav:hover { background: var(--primary); color: white; }
+
+/* Botão Hamburguer (Escondido no Desktop) */
+.hamburger {
+    display: none; 
+    font-size: 2rem;
+    cursor: pointer;
+    color: var(--text-white);
+}
+
+/* =========================================
+   RESPONSIVIDADE (MOBILE) - CORRIGIDO
+   ========================================= */
+@media (max-width: 768px) {
+    
+    /* 1. Botão Hamburguer visível */
+    .hamburger {
+        display: block;
+        z-index: 2000; /* Super importante: Fica acima do menu */
+        position: relative;
+    }
+
+    /* 2. Menu Gaveta Lateral */
+    .nav-menu {
+        position: fixed;
+        top: 0;
+        right: -100%; /* Começa escondido fora da tela */
+        width: 70%;   /* Largura da gaveta */
+        height: 100vh;
+        background: var(--bg-card);
+        display: flex; /* Garante flexbox para alinhar itens */
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        transition: 0.4s ease;
+        box-shadow: -5px 0 15px rgba(0,0,0,0.5);
+        border-left: 1px solid #333;
+    }
+
+    /* 3. Classe Ativa (Adicionada pelo JS) */
+    .nav-menu.active {
+        right: 0; /* Traz para a tela */
+    }
+
+    /* 4. Ajuste da Lista */
+    .nav-list {
+        flex-direction: column;
+        gap: 40px;
+    }
+
+    .nav-list a {
+        font-size: 1.3rem;
+    }
+}
+
+/* =========================================
+   HERO SECTION
+   ========================================= */
+.hero {
+    height: 90vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding-top: 80px;
+    
+    /* --- A MÁGICA ACONTECE AQUI --- */
+    /* O primeiro background é um filtro escuro transparente para o texto aparecer */
+    /* O segundo é a sua imagem. Certifique-se que ela está na pasta 'img' */
+    background: linear-gradient(rgba(10, 10, 10, 0.6), rgba(10, 10, 10, 0.8)), url('img/hero.png');
+    
+    /* Garante que a imagem cubra tudo e fique centralizada */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    /* Opcional: Efeito parallax simples (fixa o fundo ao rolar) */
+    background-attachment: fixed; 
+}
+
+.hero h1 {
+    font-size: 3.5rem;
+    margin-bottom: 20px;
+    line-height: 1.2;
+}
+
+.highlight {
+    background: linear-gradient(90deg, var(--primary), var(--accent));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.hero p {
+    font-size: 1.2rem;
+    max-width: 600px;
+    margin: 0 auto 40px;
+    color: #ccc;
+}
+
+.hero-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.btn {
+    display: inline-block;
+    padding: 12px 30px;
+    border-radius: 4px;
+    font-weight: 600;
+    font-family: var(--font-heading);
+}
+
+.btn-primary {
+    background: var(--primary);
+    color: white;
+}
+.btn-primary:hover { background: var(--accent); }
+
+.btn-outline {
+    border: 1px solid var(--text-light);
+    color: var(--text-light); /* Corrigido para garantir visibilidade */
+}
+.btn-outline:hover { border-color: var(--primary); color: var(--primary); }
+
+/* =========================================
+   SEÇÕES GERAIS (SOBRE, SERVIÇOS, ETC)
+   ========================================= */
+.section { padding: 80px 0; }
+.section-title {
+    font-size: 2.5rem;
+    margin-bottom: 40px;
+    text-align: center;
+}
+.section-subtitle {
+    text-align: center;
+    margin-top: -30px;
+    margin-bottom: 50px;
+    color: #888;
+}
+
+.about-grid, .services-grid, .portfolio-grid {
+    display: grid;
+    gap: 30px;
+}
+
+.about-grid { grid-template-columns: 1fr 1fr; align-items: center; }
+.cards-mvv { display: grid; gap: 20px; }
+
+.bg-card { background-color: var(--bg-card); }
+
+.card-item, .service-card, .project-card {
+    background: var(--bg-card);
+    padding: 30px;
+    border-radius: 8px;
+    border: 1px solid #333;
+    transition: transform 0.3s;
+}
+
+.service-card:hover, .project-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--primary);
+}
+
+.services-grid, .portfolio-grid {
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+}
+
+.service-card i, .card-item i {
+    font-size: 2rem;
+    color: var(--primary);
+    margin-bottom: 15px;
+}
+
+/* =========================================
+   PORTFÓLIO E LIGHTBOX
+   ========================================= */
+.project-image {
+    width: 100%;
+    height: 200px;
+    background: #333;
+    border-radius: 4px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    position: relative;
+    cursor: pointer;
+}
+
+.portfolio-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.5s ease;
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 116, 255, 0.4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.overlay i {
+    font-size: 3rem;
+    color: white;
+}
+
+.project-image:hover .overlay { opacity: 1; }
+.project-image:hover .portfolio-img { transform: scale(1.1); }
+
+.link-arrow {
+    color: var(--primary);
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    margin-top: 10px;
+}
+
+/* Lightbox (Modal) */
+.lightbox {
+    display: none;
+    position: fixed;
+    z-index: 9999; 
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.95);
+    align-items: center;
+    justify-content: center;
+}
+
+.lightbox-content {
+    max-width: 90%;
+    max-height: 90vh;
+    border: 2px solid #0074FF;
+    border-radius: 4px;
+    box-shadow: 0 0 30px rgba(0, 116, 255, 0.5);
+    animation: zoomIn 0.3s;
+}
+
+@keyframes zoomIn {
+    from {transform:scale(0)} 
+    to {transform:scale(1)}
+}
+
+.close-lightbox {
+    position: absolute;
+    top: 20px;
+    right: 40px;
+    color: white;
+    font-size: 50px;
+    cursor: pointer;
+    z-index: 10000;
+}
+
+/* =========================================
+   FOOTER
+   ========================================= */
+.footer {
+    padding: 50px 0 20px;
+    background: #050505;
+    border-top: 1px solid #333;
+}
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.footer-logo-img {
+    height: 60px;
+    width: auto;
+    margin-bottom: 15px;
+    display: block;
+}
+
+.footer-links a {
+    font-size: 1.5rem;
+    margin-left: 15px;
+}
+.footer-links a:hover { color: var(--primary); }
+.footer-bottom {
+    text-align: center;
+    font-size: 0.9rem;
+    color: #666;
+    border-top: 1px solid #1a1a1a;
+    padding-top: 20px;
+}
+
+/* =========================================
+   RESPONSIVIDADE GERAL
+   ========================================= */
+@media (max-width: 768px) {
+    .hero h1 { font-size: 2.5rem; }
+    .hero-buttons { flex-direction: column; padding: 0 20px; }
+    .btn-outline { margin-left: 0; margin-top: 10px; }
+    
+    .about-grid { grid-template-columns: 1fr; }
+    .footer-content { flex-direction: column; gap: 20px; text-align: center; }
+    .footer-logo { align-items: center; } /* Centraliza logo footer no mobile */
+}
+
+@media only screen and (max-width: 700px){
+    .lightbox-content { width: 100%; }
+}
+
+.whatsapp-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #25D366;
+    color: white;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    z-index: 1001; /* Acima do menu, mas abaixo do Lightbox se ele for 9999 */
+    transition: transform 0.3s;
+}
+
+.whatsapp-btn:hover {
+    transform: scale(1.1);
+    background-color: #1EbC57;
+}
+
+/* Estado inicial (escondido) */
+.hidden {
+    opacity: 0;
+    transform: translateY(50px); /* Empurrado para baixo */
+    transition: all 0.8s ease-out; /* Demora 0.8s para aparecer */
+}
+
+/* Estado final (visível) */
+.show {
+    opacity: 1;
+    transform: translateY(0); /* Volta para o lugar original */
+}
+
+/* Atraso para itens em grid (efeito escadinha) */
+.delay-100 { transition-delay: 100ms; }
+.delay-200 { transition-delay: 200ms; }
+.delay-300 { transition-delay: 300ms; }
+.delay-400 { transition-delay: 400ms; }
+.delay-500 { transition-delay: 500ms; }
+
+.cursor {
+    animation: blink 1s infinite;
+    color: var(--primary);
+}
+
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+}
